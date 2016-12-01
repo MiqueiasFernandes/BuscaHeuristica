@@ -350,7 +350,7 @@ public class BuscaHeuristica {
     }
 
     static Ponto direito(Ponto p, String[] mapa) {
-        if (p.x + 1 < 0) {
+        if (p.x + 1 >= mapa[0].length()) {
             return null;
         }
 
