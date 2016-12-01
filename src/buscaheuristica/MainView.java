@@ -432,13 +432,13 @@ public class MainView extends javax.swing.JFrame {
             String mapa2 = mapa;
             heuristica1(BuscaHeuristica.getmapa(mapa2),
                     BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
-                    new TreeSet<Ponto>(), 4);
+                    new TreeSet<Ponto>(), 7);
             
             mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
             
             heuristica1(BuscaHeuristica.getmapa(mapa2),
                     BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
-                    new TreeSet<Ponto>(), 7);
+                    new TreeSet<Ponto>(), 4);
             
             JOptionPane.showMessageDialog(rootPane, "terminou heuristica propagação com " + BuscaHeuristica.c1 
                     + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
