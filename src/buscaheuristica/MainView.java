@@ -424,24 +424,33 @@ public class MainView extends javax.swing.JFrame {
             return;
         }
         BuscaHeuristica.sair = BuscaHeuristica.pause = false;
-        
-       long ini = System.currentTimeMillis();
-        
+
+        long ini = System.currentTimeMillis();
+
         new Thread(() -> {
             BuscaHeuristica.c1 = 0;
             String mapa2 = mapa;
-            heuristica1(BuscaHeuristica.getmapa(mapa2),
+            Ponto p = heuristica1(BuscaHeuristica.getmapa(mapa2),
                     BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
                     new TreeSet<Ponto>(), 7);
-            
-            mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
-            
-            heuristica1(BuscaHeuristica.getmapa(mapa2),
-                    BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
-                    new TreeSet<Ponto>(), 4);
-            
-            JOptionPane.showMessageDialog(rootPane, "terminou heuristica propagação com " + BuscaHeuristica.c1 
-                    + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+
+            if (p != null && p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) == 0) {
+
+                mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
+
+                p = heuristica1(BuscaHeuristica.getmapa(mapa2),
+                        BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
+                        new TreeSet<Ponto>(), 4);
+
+                if (p == null || p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) != 0) {
+                    JOptionPane.showMessageDialog(rootPane, "terminou heuristica propagação sem encontrar o destino");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "terminou heuristica propagação com " + BuscaHeuristica.c1
+                            + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "terminou heuristica propagação sem encontrar o destino");
+            }
         }).start();
     }
 
@@ -456,19 +465,27 @@ public class MainView extends javax.swing.JFrame {
             public void run() {
                 BuscaHeuristica.c2 = 0;
                 String mapa2 = mapa;
-                heuristica2(BuscaHeuristica.getmapa(mapa2),
+                Ponto p = heuristica2(BuscaHeuristica.getmapa(mapa2),
                         BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
                         new TreeSet<Ponto>(), 8);
 
-                mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
+                if (p != null && p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) == 0) {
 
-                heuristica2(BuscaHeuristica.getmapa(mapa2),
-                        BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
-                        new TreeSet<Ponto>(), 9);
+                    mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
 
-                JOptionPane.showMessageDialog(rootPane, "terminou heuristica horizontal com " + BuscaHeuristica.c2 
-                    + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+                    p = heuristica2(BuscaHeuristica.getmapa(mapa2),
+                            BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
+                            new TreeSet<Ponto>(), 9);
 
+                    if (p == null || p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) != 0) {
+                        JOptionPane.showMessageDialog(rootPane, "terminou heuristica horizontal sem encontrar o destino");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "terminou heuristica horizontal com " + BuscaHeuristica.c2
+                                + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "terminou heuristica horizontal sem encontrar o destino");
+                }
             }
         }).start();
     }
@@ -484,19 +501,27 @@ public class MainView extends javax.swing.JFrame {
             public void run() {
                 BuscaHeuristica.c3 = 0;
                 String mapa2 = mapa;
-                heuristica3(BuscaHeuristica.getmapa(mapa2),
+                Ponto p = heuristica3(BuscaHeuristica.getmapa(mapa2),
                         BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
                         new TreeSet<Ponto>(), 10);
 
-                mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
+                if (p != null && p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) == 0) {
 
-                heuristica3(BuscaHeuristica.getmapa(mapa2),
-                        BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
-                        new TreeSet<Ponto>(), 11);
+                    mapa2 = mapa2.replace("E", "Y").replace("X", "Z").replace("Y", "X").replace("Z", "E");
 
-                JOptionPane.showMessageDialog(rootPane, "terminou heuristica vertical com " + BuscaHeuristica.c3 
-                    + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+                    p = heuristica3(BuscaHeuristica.getmapa(mapa2),
+                            BuscaHeuristica.getEntrada(BuscaHeuristica.getmapa(mapa2)),
+                            new TreeSet<Ponto>(), 11);
 
+                    if (p == null || p.compareTo(BuscaHeuristica.getSaida(BuscaHeuristica.getmapa(mapa2))) != 0) {
+                        JOptionPane.showMessageDialog(rootPane, "terminou heuristica vertical sem encontrar o destino");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "terminou heuristica vertical com " + BuscaHeuristica.c3
+                                + " comparações! em " + (System.currentTimeMillis() - ini) + " ms");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "terminou heuristica vertical sem encontrar o destino");
+                }
             }
         }).start();
     }
@@ -556,7 +581,13 @@ public class MainView extends javax.swing.JFrame {
 
             System.out.println(sb.toString());
             mapa = sb.toString();
-            atualizaMapa();
+
+            if (!mapa.contains("X") || !mapa.contains("E")) {
+                JOptionPane.showMessageDialog(rootPane, "A entrada e OBJETIVO devem ser informados");
+                jCheckBoxMenuItem1.setSelected(true);
+            } else {
+                atualizaMapa();
+            }
         }
 
 
